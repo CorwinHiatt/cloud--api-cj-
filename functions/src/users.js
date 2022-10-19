@@ -18,3 +18,13 @@ export async function getAllUsers(req, res) {
     } )
     res.send(users)
 }
+
+export async function updateUser(req, res){
+    // const uid = req.params.uid
+     const { uid } = req.params
+     const db = dbConnect()
+    const doc = await db.collection('users').patch(uid).update()
+    .catch(err => res.status(500).send({ success: false, message: err}))
+    res.status(202).send({success: true, message: 'User updated:' + doc.id})
+    
+ }
